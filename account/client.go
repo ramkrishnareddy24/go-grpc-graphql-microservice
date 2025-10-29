@@ -3,7 +3,7 @@ package account
 import (
 	"context"
 
-	"github.com/ramkrishnareddy24/go-grpc-graphql-microservice/account/cmd/account/pb/github.com/ramkrishnareddy24/go-grpc-graphql-microservice/account/cmd/account/pb"
+	"github.com/ramkrishnareddy24/go-grpc-graphql-microservice/account/pb"
 	"google.golang.org/grpc"
 )
 
@@ -54,7 +54,7 @@ func (c *Client) GetAccount(ctx context.Context, id string) (*Account, error) {
 }
 
 func (c *Client) GetAccounts(ctx context.Context, skip uint64, take uint64) ([]Account, error) {
-	r,err := c.service.GetAccounts(
+	r, err := c.service.GetAccounts(
 		ctx,
 		&pb.GetAccountsRequest{
 			Skip: skip,
@@ -65,12 +65,11 @@ func (c *Client) GetAccounts(ctx context.Context, skip uint64, take uint64) ([]A
 		return nil, err
 	}
 	accounts := []Account{}
-	for _,a := range r.Accounts {
-		accounts = append(accounts,Account{
+	for _, a := range r.Accounts {
+		accounts = append(accounts, Account{
 			ID:   a.Id,
 			Name: a.Name,
 		})
 	}
-	return accounts,nil
+	return accounts, nil
 }
-
